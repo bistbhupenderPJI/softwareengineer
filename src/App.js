@@ -1,26 +1,35 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, useEffect,  Fragment } from 'react'
 import AddStartupForm from './forms/AddStartupForm'
 import EditStartupForm from './forms/EditStartupForm'
 import StartupTable from './tables/StartupTable'
 
-const App = () => {
-	// Data
-	const startupsData = [
-		{ id: 1, name: 'ABC', country: 'India' },
-		{ id: 2, name: 'DEF', country: 'Singapore' },
-		{ id: 3, name: 'HIJ', country: 'Malesia' },
-	]
+import axios from 'axios'
 
+const App = () => {
 	const initialFormState = { id: null, name: '', country: '' }
 
 	// Setting state
-	const [ startups, setStartups ] = useState(startupsData)
+	const [ startups, setStartups ] = useState([])
 	const [ currentStartup, setCurrentStartup ] = useState(initialFormState)
 	const [ editing, setEditing ] = useState(false)
 
+  useEffect(async () => {
+    const result = await axios(
+      'https://bb-se.bhupenderbist.repl.co/startups/all',
+    );
+    setStartups(result.data);
+  }, []);
+
+
 	// CRUD operations
 	const addStartup = startup => {
-		startup.id = startups.length + 1
+		//startup.id = startups.length + 1
+    axios.post('https://bb-se.bhupenderbist.repl.co/startups/create', startup)
+        .then((result) => {
+          //setShowLoading(false);
+          //props.history.push('/show/' + result.data._id)
+        }).catch((error) => console.log(error));
+
 		setStartups([ ...startups, startup ])
 	}
 
