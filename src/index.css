@@ -1,0 +1,9 @@
+button,
+.button {
+	margin-bottom: 0 !important;
+	margin-right: .5rem;
+}
+
+h1, p {
+  font-family: Lato;
+}
