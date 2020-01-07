@@ -1,6 +1,7 @@
 import React from 'react'
 
 const StartupTable = props => (
+  
   <table>
     <thead>
       
